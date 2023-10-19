@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:wght@300;400&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* font-family: 'Poppins',
+sans-serif; */
+/* font-family: 'Playfair Display',
+serif; */
+
+/* //navbar css */
+.navbar {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow: 0 8px 6px -6px gray;
+  border-bottom: solid gray !important;
+}
+
+.nav-link {
+  font-weight: 300 !important;
+}
+.active {
+  border-bottom: 2px solid black;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-family: "roboto", sans-serif;
+  letter-spacing: 3px;
+}
+.footer{
+  color: white;
+  padding: 25px;
+  background: #a84c4c;
+  /* background: -webkit-linear-gradient(
+    to right,#ce4f4f,#11ce50
+  ); */
+  background: linear-gradient(to right,#ad5389,
+    #3c1053);
+}
+.footer a{
+  text-decoration: none;
+  color:whitesmoke;
+  padding: 10px;
+}
+.footer a:hover{
+  color: antiquewhite;
+  border-bottom: 1px solid #ffefba;
+}
+
+/* ============ page not found ============== */
+
+.pnf{
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.pnf-title{
+  font-size: 3rem;
+  font-weight: 700;
+}
+.pnf-heading{
+  font-weight: normal;
+}
+.pnf-btn{
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* =========contact us ========= */
+.contactus {
+  margin: 0;
+  padding: 0;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ========= Register ========= */
+.register{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
