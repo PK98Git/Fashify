@@ -8,7 +8,6 @@ import {
   getSingleProductController,
   deleteProductController,
   productPhotoController,
-  mytest,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -25,9 +24,10 @@ router.post(
 
 //update product
 router.put(
-  "/update-product/:id",
+  "/update-product/:pid",
   requireSignIn,
   isAdmin,
+  formidable(),
   updateProductController
 );
 
@@ -43,7 +43,7 @@ router.get("/product-photo/:pid",productPhotoController);
 
 //delete product
 router.delete(
-  "/delete-product/:id",
+  "/delete-product/:pid",
   requireSignIn,
   isAdmin,
   deleteProductController

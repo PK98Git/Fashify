@@ -3,6 +3,8 @@ import productModel from "../models/productModel.js";
 import fs from 'fs'
 import slugify from "slugify";
 
+import { AsyncLocalStorage } from "async_hooks";
+
 
 export const createProductController = async (req, res) => {
   try {
@@ -51,16 +53,50 @@ export const createProductController = async (req, res) => {
 //update products
 export const updateProductController = async (req, res) => {
   try {
-    const { name } = req.body;
-    const { id } = req.params;
-    const products = await productModel.findByIdAndUpdate(
-      id,
-      { name, slug: slugify(name) },
-      { new: true }
-    );
-    res.status(200).send({
+    const {
+      name,
+      slug,
+      description,
+      price,
+      brand,
+      category,
+      color,
+      quantity,
+      shipping,
+    } = req.fields;
+    const { photo } = req.files;
+    //validation
+    switch (true) {
+      case !name:
+        return res.status(500).send({ error: "Name is required" });
+      case !description:
+        return res.status(500).send({ error: "Description is required" });
+      case !price:
+        return res.status(500).send({ error: "Price is required" });
+      case !brand:
+        return res.status(500).send({ error: "Brand is required" });
+      case !category:
+        return res.status(500).send({ error: "Category is required" });
+      case !color:
+        return res.status(500).send({ error: "Color is required" });
+      case !quantity:
+        return res.status(500).send({ error: "Quantity is required" });
+      case photo && photo.size > 1000000:
+        return res
+          .status(500)
+          .send({ error: "Photo is required and Less than 1MB" });
+    }
+    const products = await productModel.findByIdAndUpdate(req.params.pid,
+      {...req.fields,slug:slugify(name)},{new:true}
+      )
+    if (photo) {
+      products.photo.data = fs.readFileSync(photo.path);
+      products.photo.contentType = photo.type;
+    }
+    await products.save();
+    res.status(201).send({
       success: true,
-      message: "Category Updated SuccessFully",
+      message: "Product updated Successfully",
       products,
     });
   } catch (error) {
@@ -68,7 +104,7 @@ export const updateProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error while updating product",
+      message: "Error in creating products",
     });
   }
 };
@@ -115,15 +151,13 @@ export const getSingleProductController = async (req, res) => {
 };
 
 //delete Category
-
 export const deleteProductController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const products = await categoryModel.findByIdAndDelete(id);
+    await productModel.findByIdAndDelete(req.params.pid).select("-photo");
     res.status(200).send({
       success: true,
-      message: "Category deleted successfully",
-      products,
+      message: "Product deleted successfully",
+ 
     });
   } catch (error) {
     console.log(error);
@@ -172,3 +206,4 @@ export const productPhotoController = async (req, res) => {
 //     });
 //   }
 // };
+
