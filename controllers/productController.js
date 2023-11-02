@@ -7,7 +7,7 @@ import slugify from "slugify";
 export const createProductController = async (req, res) => {
   try {
     const {name,slug,description,price,brand,category,color,quantity,shipping} = req.fields
-	const {photo} = req.fields
+	  const {photo} = req.files;
 	//validation
 	switch (true) {
     case !name:
@@ -27,42 +27,33 @@ export const createProductController = async (req, res) => {
     case photo && photo.size > 1000000:
       return res.status(500).send({ error: "Photo is required and Less than 1MB" });
   }
-	const products = new productModel({...req.fields,slug:slugify(name)});
+	const products = new productModel({...req.fields,slug:slugify(name)})
 	if(photo){
 		products.photo.data = fs.readFileSync(photo.path);
-		products.contentType = photo.type;
+		products.photo.contentType = photo.type;
 	}
-	await products.save();
+	await products.save()
 	res.status(201).send({
 		success:true,
 		message:"Product Created Successfully",
-		products
-	})
-	
-	
-	
-	
-	
-	
-	
-	
-
+		products,
+	});
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error in creating product",
+      message: "Error in creating products",
     });
   }
 };
 
-//update category
+//update products
 export const updateProductController = async (req, res) => {
   try {
     const { name } = req.body;
     const { id } = req.params;
-    const category = await categoryModel.findByIdAndUpdate(
+    const products = await productModel.findByIdAndUpdate(
       id,
       { name, slug: slugify(name) },
       { new: true }
@@ -70,53 +61,55 @@ export const updateProductController = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Category Updated SuccessFully",
-      category,
+      products,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error while updating category",
+      message: "Error while updating product",
     });
   }
 };
 
 //Get All Categories
-export const productController = async (req, res) => {
+export const getProductController = async (req, res) => {
   try {
-    const category = await categoryModel.find({});
+    console.log("product controller running");
+    const products = await productModel.find({}).populate('category').select("-photo").limit(12).sort({createdAt:-1});
     res.status(200).send({
       success: true,
-      message: "All categories List",
-      category,
+      message: "All products List",
+      countTotal: products.length,
+      products,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      error,
-      message: "Error while getting all categories",
+      message: "Error while getting all products",
+      error:error.message
     });
   }
 };
 
-//get Single Category
+//get Single Product
 
-export const singleProductController = async (req, res) => {
+export const getSingleProductController = async (req, res) => {
   try {
-    const category = await categoryModel.findOne({ slug: req.params.slug });
+    const product = await productModel.findOne({ slug: req.params.slug }).select("-photo").populate("category");
     res.status(200).send({
       success: true,
-      message: "Selected category Listed",
-      category,
+      message: "Selected products Listed",
+      product,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error while getting selected  category",
+      message: "Error while getting selected  products",
     });
   }
 };
@@ -126,18 +119,56 @@ export const singleProductController = async (req, res) => {
 export const deleteProductController = async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await categoryModel.findByIdAndDelete(id);
+    const products = await categoryModel.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
       message: "Category deleted successfully",
-      category,
+      products,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error while deleting selected  category",
+      message: "Error while deleting selected  products",
     });
   }
 };
+
+
+
+//get photo
+
+export const productPhotoController = async (req, res) => {
+  try {
+    console.log("Photo controller running")
+    const product = await productModel.findById(req.params.pid).select("photo");
+    if (product.photo.data) {
+      res.set("Content-type", product.photo.contentType);
+      return res.status(200).send(product.photo.data);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr while getting photo",
+      error,
+    });
+  }
+};
+
+
+
+// export const mytest = async (req, res) => {
+//   try {
+//     console.log("mytest controller running");
+    
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: "Erorr while getting photo",
+//       error,
+//     });
+//   }
+// };
