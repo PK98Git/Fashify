@@ -230,7 +230,24 @@ export const productFilterController = async (req, res) => {
   }
 };
 
+//Product Count Controller
 
+export const productCountController = async (req, res) => {
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success: true,
+      total,
+    });
+  } catch (error) {
+    console.loh(error);
+    res.status(400).send({
+      message: "Error in product count",
+      error,
+      success: false,
+    });
+  }
+};
 // export const mytest = async (req, res) => {
 //   try {
 //     console.log("mytest controller running");

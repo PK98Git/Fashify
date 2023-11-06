@@ -9,6 +9,7 @@ import {
   deleteProductController,
   productPhotoController,
   productFilterController,
+  productCountController,
 
 } from "../controllers/productController.js";
 
@@ -54,6 +55,7 @@ router.delete(
 //filter product
 router.post('/product-filter', productFilterController)
 
-
+//Product count
+router.get('/product-count', productCountController)
 
 export default router;
