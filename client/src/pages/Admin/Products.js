@@ -23,6 +23,7 @@ const Products = () => {
 	//life cycle method
 	useEffect(() => {
 	  getAllProducts()
+    
 	}, [])
 	
   return (
@@ -45,9 +46,6 @@ const Products = () => {
                   <div className="card-body">
                     <h5 className="card-title">{p.name}</h5>
                     <p className="card-text">{p.description}</p>
-                    {/* <a href="#" className="btn btn-primary">
-                  Go somewhere
-                </a> */}
                   </div>
                 </div>
               </Link>

@@ -8,6 +8,8 @@ import {
   getSingleProductController,
   deleteProductController,
   productPhotoController,
+  productFilterController,
+
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -48,5 +50,10 @@ router.delete(
   isAdmin,
   deleteProductController
 );
+
+//filter product
+router.post('/product-filter', productFilterController)
+
+
 
 export default router;

@@ -59,7 +59,7 @@ const CreateProduct = () => {
       const { data } = await axios.post("/api/v1/product/create-product",productData);
       if(data?.success){
         toast.success('Product Created SuccessFully')
-        navigate('/dashbaord/admin/products')
+        navigate('/dashboard/admin/products')
       }else{
         toast.error("We are having error");
       }
