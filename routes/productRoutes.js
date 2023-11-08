@@ -11,6 +11,8 @@ import {
   productFilterController,
   productCountController,
   productListController,
+  searchProductController,
+  relatedProductController,
 
 } from "../controllers/productController.js";
 
@@ -61,5 +63,11 @@ router.get('/product-count', productCountController)
 
 //Product Per Page
 router.get('/product-list/:page',productListController)
+
+//serarch Product
+router.get('/search/:keyword',searchProductController)
+
+//similar product
+router.get('/related-product/:pid/:cid',relatedProductController)
 
 export default router;

@@ -249,11 +249,10 @@ export const productCountController = async (req, res) => {
   }
 };
 
-
 //Product List based on Page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 2;
+    const perPage = 6;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
@@ -275,6 +274,58 @@ export const productListController = async (req, res) => {
     });
   }
 };
+
+//Serarch product 560
+
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const results = await productModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      .select("-photo");
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error in Search Product API",
+      error,
+    });
+  }
+};
+
+
+//similar product
+export const relatedProductController = async (req,res) =>{
+  try {
+    const {pid,cid} =  req.params
+    const products = await productModel
+      .find({
+        category: cid,
+        _id: {
+          $ne: pid,
+        },
+      })
+      .select("-photo").limit(3).populate("category")
+      res.status(200).send({
+        success:true,
+        products,
+      })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+      success:false,
+      message:'error while getting related product',
+      error
+    })
+  }
+}
+
 // export const mytest = async (req, res) => {
 //   try {
 //     console.log("mytest controller running");
