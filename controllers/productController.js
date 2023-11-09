@@ -1,5 +1,6 @@
 import express from "express";
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js";
 import fs from "fs";
 import slugify from "slugify";
 
@@ -299,11 +300,10 @@ export const searchProductController = async (req, res) => {
   }
 };
 
-
 //similar product
-export const relatedProductController = async (req,res) =>{
+export const relatedProductController = async (req, res) => {
   try {
-    const {pid,cid} =  req.params
+    const { pid, cid } = req.params;
     const products = await productModel
       .find({
         category: cid,
@@ -311,21 +311,43 @@ export const relatedProductController = async (req,res) =>{
           $ne: pid,
         },
       })
-      .select("-photo").limit(3).populate("category")
-      res.status(200).send({
-        success:true,
-        products,
-      })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+    res.status(200).send({
+      success: true,
+      products,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).send({
-      success:false,
-      message:'error while getting related product',
-      error
-    })
+      success: false,
+      message: "error while getting related product",
+      error,
+    });
   }
-}
+};
 
+//product by category
+
+export const productCategoryController = async (req, res) => {
+  try {
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    const products = await productModel.find({ category }).populate("category");
+    res.status(200).send({
+      success: true,
+      category,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error,
+      message: "Error while getting products",
+    });
+  }
+};
 // export const mytest = async (req, res) => {
 //   try {
 //     console.log("mytest controller running");

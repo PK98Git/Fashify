@@ -19,9 +19,9 @@ serif; */
   font-size: 17px;
   line-height: 26px;
   text-transform: uppercase;
-  box-shadow: 0 8px 6px -6px gray;
-  --webkit-box-shadow: 0 8px 6px -6px gray;
-  border-bottom: solid gray !important;
+  box-shadow: 0 8px 6px -6px rgb(199, 199, 199);
+  --webkit-box-shadow: 0 8px 6px -6px rgb(190, 190, 190);
+  /* border-bottom: solid gray !important; */
 }
 
 .nav-link {
