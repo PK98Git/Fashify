@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
 
-
 const HomePage = () => {
   const navigate = useNavigate();
 
@@ -179,6 +178,10 @@ const HomePage = () => {
                       className="btn btn-secondary ms-1"
                       onClick={() => {
                         setCart([...cart, p]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, p])
+                        );
                         toast.success("Item Added to cart");
                       }}
                     >
