@@ -84,3 +84,18 @@ filters
 	font-weight: bold;
 	font-size: 20px !important;
 }
+
+.custom-button {
+	background-color: #4D4D50;
+	/* Add any other desired styles */
+	color: white;
+}
+
+.center-caption{
+	margin-bottom: -2.2rem;
+}
+.glowing-h1 {
+	text-shadow: 0 0 5px rgb(33 33 33 / 80%),
+		0 0 10px rgb(0 0 0 / 0%),
+		0 0 15px rgb(0 0 0 / 13%)
+}

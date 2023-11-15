@@ -84,7 +84,7 @@ const ProductDetails = () => {
                   className="card-img-top"
                   alt={p.name}
                   width={100}
-                  Height={200}
+                  height={200}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>

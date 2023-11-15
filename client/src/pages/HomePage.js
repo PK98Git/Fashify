@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../components/Layout/Layout";
-import { useAuth } from "../context/auth";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+
 import { Checkbox, Radio } from "antd";
 import { Prices } from "./../components/Price";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
 import "../styles/Homepage.css";
 import "../styles/carousel.css";
+import * as Popper from "@popperjs/core";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -64,6 +64,7 @@ const HomePage = () => {
     if (page === 1) return;
     loadMore();
   }, [page]);
+
   //loadmore
   const loadMore = async () => {
     try {
@@ -113,90 +114,105 @@ const HomePage = () => {
   };
   return (
     <Layout title={"All Products - Best offers "}>
-      <div className="carousel-inner">
-        <div className="carousel-item">
-          <svg
-            className="bd-placeholder-img"
-            width="100%"
-            height="100%"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-          </svg>
-          <div className="container">
-            <div className="carousel-caption text-start">
-              <h1>Example headline.</h1>
-              <p className="opacity-75">
-                Some representative placeholder content for the first slide of
-                the carousel.
-              </p>
-              <p>
-                <a className="btn btn-lg btn-primary" href="#">
-                  Sign up today
-                </a>
-              </p>
+      <div id="myCarousel" className="carousel slide " data-bs-ride="carousel">
+        <div className="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to={0}
+            className
+            aria-label="Slide 1"
+          />
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to={1}
+            aria-label="Slide 2"
+            className
+          />
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to={2}
+            aria-label="Slide 3"
+            className="active"
+            aria-current="true"
+          />
+        </div>
+        <div className="carousel-inner">
+          <div className="carousel-item">
+            <img src="/images/WhiteBanner1.png" width={"100%"} alt="white" />
+            <div className="container">
+              <div className="carousel-caption text-center text-success-emphasis mb-0">
+                <h1>Denim meets White Blouses!</h1>
+                <p className="opacity-75">
+                  Discover the Perfect Pairings: Classic Denim Meets Elegant
+                  White Blouses. Shop Now for Effortlessly Chic Looks!
+                </p>
+                <p>
+                  <a className="btn btn-lg btn custom-button" >
+                    Sign up today
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="carousel-item active">
+            <img src="/images/WhiteBanner2.png" width={"100%"} alt="White 2" />
+            <div className="container">
+              <div className="carousel-caption text-dark center-caption">
+                <h1 className="glowing-h1">
+                  Unwrap Fashion: Xmas Sale Now On!
+                </h1>
+                <p>
+                  Discover Trendy Styles and Irresistible Deals on the Hottest
+                  Fashion Trends!
+                </p>
+                <p>
+                  <a className="btn btn-lg btn-danger " href="#">
+                    Shop Now
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="carousel-item ">
+            <img src="/images/BrownBanner1.png" width={"100%"} alt="Brown" />
+            <div className="container">
+              <div className="carousel-caption text-end">
+                <h1>Comfortable and Stylish Hoodie.</h1>
+                <p>
+                  Get a discount of 35% on our Hoodie Collection! Designed with
+                  premium quality and is versatile for every occasion.
+                </p>
+                <p>
+                  <a className="btn btn-lg btn-light" href="#">
+                    Buy Now
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        <div className="carousel-item active carousel-item-start">
-          <svg
-            className="bd-placeholder-img"
-            width="100%"
-            height="100%"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-          </svg>
-          <div className="container">
-            <div className="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>
-                Some representative placeholder content for the second slide of
-                the carousel.
-              </p>
-              <p>
-                <a className="btn btn-lg btn-primary" href="#">
-                  Learn more
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="carousel-item carousel-item-next carousel-item-start">
-          <svg
-            className="bd-placeholder-img"
-            width="100%"
-            height="100%"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-          </svg>
-          <div className="container">
-            <div className="carousel-caption text-end">
-              <h1>One more for good measure.</h1>
-              <p>
-                Some representative placeholder content for the third slide of
-                this carousel.
-              </p>
-              <p>
-                <a className="btn btn-lg btn-primary" href="#">
-                  Browse gallery
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" aria-hidden="true" />
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true" />
+          <span className="visually-hidden">Next</span>
+        </button>
       </div>
-
       <div className="row mt-3">
         <div className="col-md-2 ms-4">
           <h4 className="text-center">Filter By Price</h4>
@@ -227,7 +243,6 @@ const HomePage = () => {
               className="btn btn-danger"
               onClick={() => window.location.reload()}
             >
-              {" "}
               RESET
             </button>
           </div>
@@ -243,7 +258,7 @@ const HomePage = () => {
                   className="card-img-top"
                   alt={p.name}
                   width={100}
-                  Height={200}
+                  height={200}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
@@ -293,11 +308,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <script
-        src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"
-      ></script>
     </Layout>
   );
 };

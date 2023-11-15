@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import Layout from "./../components/Layout/Layout";
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const CategoryProduct = () => {
 
@@ -40,7 +40,7 @@ const CategoryProduct = () => {
                     className="card-img-top"
                     alt={p.name}
                     width={100}
-                    Height={200}
+                    height={200}
                   />
                   <div className="card-body">
                     <h5 className="card-title">{p.name}</h5>
