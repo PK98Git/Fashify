@@ -8,6 +8,8 @@ import { Prices } from "./../components/Price";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
+import "../styles/Homepage.css";
+import "../styles/carousel.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -111,6 +113,90 @@ const HomePage = () => {
   };
   return (
     <Layout title={"All Products - Best offers "}>
+      <div className="carousel-inner">
+        <div className="carousel-item">
+          <svg
+            className="bd-placeholder-img"
+            width="100%"
+            height="100%"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
+          </svg>
+          <div className="container">
+            <div className="carousel-caption text-start">
+              <h1>Example headline.</h1>
+              <p className="opacity-75">
+                Some representative placeholder content for the first slide of
+                the carousel.
+              </p>
+              <p>
+                <a className="btn btn-lg btn-primary" href="#">
+                  Sign up today
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="carousel-item active carousel-item-start">
+          <svg
+            className="bd-placeholder-img"
+            width="100%"
+            height="100%"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
+          </svg>
+          <div className="container">
+            <div className="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p>
+                Some representative placeholder content for the second slide of
+                the carousel.
+              </p>
+              <p>
+                <a className="btn btn-lg btn-primary" href="#">
+                  Learn more
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="carousel-item carousel-item-next carousel-item-start">
+          <svg
+            className="bd-placeholder-img"
+            width="100%"
+            height="100%"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
+          </svg>
+          <div className="container">
+            <div className="carousel-caption text-end">
+              <h1>One more for good measure.</h1>
+              <p>
+                Some representative placeholder content for the third slide of
+                this carousel.
+              </p>
+              <p>
+                <a className="btn btn-lg btn-primary" href="#">
+                  Browse gallery
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="row mt-3">
         <div className="col-md-2 ms-4">
           <h4 className="text-center">Filter By Price</h4>
@@ -195,7 +281,7 @@ const HomePage = () => {
           <div className="m-2 p-3">
             {products && products.length < total && (
               <button
-                className="btn btn-warning"
+                className="btn btn-warning loadmore"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
@@ -207,6 +293,11 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <script
+        src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"
+      ></script>
     </Layout>
   );
 };
